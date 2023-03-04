@@ -1,0 +1,59 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/register.css' %}">
+    <title>Login</title>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-5 bg-side">
+                <div class='header'>
+                    <img src="{% static 'img/logo_adote.png' %}" width="9%"><span class="font-logo">ADO.TE</span>
+                </div>
+
+                <div class="body-form">
+                    {% if messages %}
+                        <br>
+                        {% for message in messages %}
+                            <div class="alert {{message.tags}}">
+                                {{message}}
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                    <h2>Logar</h2>
+                    <p>Que bom ter você de volta.</p>
+                    <hr>
+                    <form action="{% url 'login' %}" method="POST">{% csrf_token %}
+                        <span>Nome:</span>
+                        <input type="text" class="form-control" placeholder="Digite seu nome..." name="nome">
+                        <br>
+                       
+                        <span>Senha:</span>
+                        <input type="password" class="form-control" placeholder="Digite sua senha..." name="senha">
+                            
+
+                        <input type="submit" value="SALVAR" class="btn-custom-primary">
+                    
+                        <a href="/user/register/" class="link-float">Cadastre-se</a>
+                    </form>
+                </div>
+            </div>
+
+            <div class="col-md-7">
+                <div class="side-logo">
+                    <img class="logo-margin-top" src="{% static 'img/logo_adote.png' %}" width="20%">
+                    <h1>ADO.TE</h1>
+                    <p>Nos ajude a salvar vidas.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
