@@ -31,8 +31,11 @@
                         <div class="col-md-9">
                             <span class="span-bold">Nome:</span>
                             <p>{{pet.nome}}</p>
+                            <p style="font-size: 20px;"><strong>Tags: </strong></p>
                             <div style="width:40%">
-                                
+                                {% for tag in pet.tags.all %}
+                                    {{ tag }}
+                                {% endfor %}
                             </div>
                         </div>
                     </div>  

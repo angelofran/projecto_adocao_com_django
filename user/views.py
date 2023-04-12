@@ -12,11 +12,13 @@ def register(request):
         return redirect('/divulgar/novo_pet')
     if request.method == "GET":
         return render(request, 'register.html')
+    
     else:
         nome = request.POST.get('nome')
         email = request.POST.get('email')
         senha = request.POST.get('senha')
         senha_confirm = request.POST.get('confirmar_senha')
+
         if len(nome.strip()) == 0 or len(email.strip()) == 0 or len(senha.strip()) == 0 or len(senha_confirm.strip()) == 0:
             messages.add_message(request, constants.ERROR, "Complete os espaços.")
             return render(request, 'register.html')
@@ -38,8 +40,8 @@ def register(request):
             return render(request, 'register.html')
 
 
-#login
-def login(request):
+# login
+def llogin(request):
     if request.method == "GET":
         return render(request, 'login.html')
     elif request.method == "POST":
@@ -47,7 +49,7 @@ def login(request):
         senha = request.POST.get('senha')
         user = authenticate(username=nome, password=senha)
         if user is not None:
-            login(request)
+            login(request, user)
             return redirect('/divulgar/novo_pet')
         else:
             messages.add_message(request, constants.ERROR, 'Usuário ou senha inválidos')
