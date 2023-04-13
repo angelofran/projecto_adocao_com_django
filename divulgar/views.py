@@ -5,8 +5,11 @@ from django.contrib import messages
 from django.contrib.messages import constants
 from .models import Tag, Raça, novo_pet
 from django.contrib.auth.decorators import login_required
+from adotar.models import PedidoAdocao
+
+
 # Create your views here.
-@login_required
+@login_required(login_url='/user/login/')
 def new_pet(request):
     if request.method == "POST":
         foto = request.FILES.get('foto')
@@ -43,14 +46,14 @@ def new_pet(request):
         return render(request, 'newpet.html')
 
 
-@login_required
+@login_required(login_url='/user/login/')
 def seus_pets(request):
     if request.method == "GET":
         pets = novo_pet.objects.filter(username=request.user)
         return render(request, 'seus_pets.html', {'pets': pets})
 
 
-@login_required
+@login_required(login_url='/user/login/')
 def remover_pets(request, id):
     pet = novo_pet.objects.get(id=id)
     if not pet.username == request.user:
@@ -61,8 +64,14 @@ def remover_pets(request, id):
     messages.add_message(request, constants.SUCCESS, "Removido com sucesso")
     return redirect('/divulgar/seus_pets')
     
-@login_required
+@login_required(login_url='/user/login/')
 def ver_pet(request , id):
     if request.method == "GET":
         pet = novo_pet.objects.get(id=id)
         return render(request, 'ver_pet.html', {'pet':pet})
+    
+@login_required(login_url='/user/login/')
+def ver_pedido_adocao(request):
+    if request.method == "GET":
+        pedidos = PedidoAdocao.objects.filter(usuario=request.user).filter(status='AG')
+        return render(request, 'ver_pedido_adocao.html', {'pedidos':pedidos})
